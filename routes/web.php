@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\MatakuliahController;
@@ -31,3 +32,4 @@ Route ::get('/matakuliah/{param1}', [MatakuliahController::class,'show']);
 Route::get('/about', function () {
     return view('halaman-about');
 });
+route::get('/home', [HomeController::class,'index']);
