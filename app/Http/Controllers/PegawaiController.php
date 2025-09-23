@@ -1,58 +1,60 @@
 <?php
+defined('BASEPATH') or exit('No direct script access allowed');
 
-namespace App\Http\Controllers;
-
-use Illuminate\Http\Request;
-use Carbon\Carbon;
-
-class PegawaiController extends Controller
+class PegawaiController extends CI_Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        // Data yang diperlukan
-        $nama = 'Alyah Najwa Restu Islami'; // Ganti dengan nama yang sesuai
-        $tanggalLahir = '2006-01-28'; // Ganti dengan tanggal lahir yang sesuai (YYYY-MM-DD)
-        $tglHarusWisuda = '2028-08-30'; // Ganti dengan tanggal wisuda yang sesuai (YYYY-MM-DD)
-        $currentSemester = 4; // Ganti dengan semester saat ini
+        // Data dasar
+        $name = "Alyah Najwa Restu Islami";
+        $birthdate = new DateTime("2003-05-14"); // contoh tanggal lahir
+        $today = new DateTime();
+        $my_age = $today->diff($birthdate)->y;
 
-        // Menghitung umur dari tanggal lahir
-        $umur = Carbon::parse($tanggalLahir)->age;
-
-        // Menghitung sisa hari sampai tanggal wisuda
-        $sisaHariWisuda = Carbon::parse($tglHarusWisuda)->diffInDays(Carbon::now());
-
-        // Menentukan pesan berdasarkan semester
-        $pesanSemester = '';
-        if ($currentSemester < 3) {
-            $pesanSemester = 'Masih Awal, Kejar TAK';
-        } elseif ($currentSemester > 3) {
-            $pesanSemester = 'Jangan main-main, kurang-kurangi main game!';
-        }
-
-        // Data yang akan ditampilkan
-        $dataPegawai = [
-            'name' => $nama,
-            'my_age' => $umur,
-            'hobbies' => [
-                'Membaca Buku',
-                'Bermain Futsal',
-                'Coding',
-                'Menonton Film',
-                'Fotografi'
-            ],
-            'tgl_harus_wisuda' => $tglHarusWisuda,
-            'time_to_study_left' => $sisaHariWisuda,
-            'current_semester' => $currentSemester,
-            'pesan_semester' => $pesanSemester, // Key tambahan untuk pesan
-            'future_goal' => 'Menjadi seorang full-stack developer' // Ganti dengan cita-cita yang sesuai
+        // Hobi (array minimal 5 item)
+        $hobbies = [
+            "Membaca",
+            "Menulis",
+            "Ngoding",
+            "Traveling",
+            "Main musik"
         ];
 
-        // Mengembalikan data dalam format JSON
-        return response()->json($dataPegawai);
+        // Tanggal harus wisuda
+        $tgl_harus_wisuda = new DateTime("2027-07-30");
+
+        // Hitung jarak hari ke wisuda
+        $interval = $today->diff($tgl_harus_wisuda);
+        $time_to_study_left = $interval->days;
+
+        // Semester saat ini
+        $current_semester = 2; // contoh bisa diubah sesuai kebutuhan
+
+        // Pesan tambahan berdasarkan semester
+        if ($current_semester < 3) {
+            $semester_message = "Masih Awal, Kejar TAK";
+        } else {
+            $semester_message = "Jangan main-main, kurang-kurangi main game!";
+        }
+
+        // Cita-cita
+        $future_goal = "Menjadi Software Engineer profesional";
+
+        // Kirim data ke view
+        $data = [
+            'name' => $name,
+            'my_age' => $my_age,
+            'hobbies' => $hobbies,
+            'tgl_harus_wisuda' => $tgl_harus_wisuda->format('Y-m-d'),
+            'time_to_study_left' => $time_to_study_left,
+            'current_semester' => $current_semester,
+            'semester_message' => $semester_message,
+            'future_goal' => $future_goal
+        ];
+
+        // tampilkan data (bisa ke view atau json)
+        $this->load->view('pegawai_view', $data);
+        // atau kalau ingin JSON:
+        // echo json_encode($data);
     }
 }
