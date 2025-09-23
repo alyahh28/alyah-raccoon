@@ -1,60 +1,42 @@
 <?php
-defined('BASEPATH') or exit('No direct script access allowed');
 
-class PegawaiController extends CI_Controller
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use Carbon\Carbon;
+
+class PegawaiController extends Controller
 {
     public function index()
     {
-        // Data dasar
-        $name = "Alyah Najwa Restu Islami";
-        $birthdate = new DateTime("2003-05-14"); // contoh tanggal lahir
-        $today = new DateTime();
-        $my_age = $today->diff($birthdate)->y;
 
-        // Hobi (array minimal 5 item)
-        $hobbies = [
-            "Membaca",
-            "Menulis",
-            "Ngoding",
-            "Traveling",
-            "Main musik"
-        ];
+        $tglLahir = Carbon::createFromDate(2006, 01, 28);
+        $umur = $tglLahir->age;
 
-        // Tanggal harus wisuda
-        $tgl_harus_wisuda = new DateTime("2027-07-30");
 
-        // Hitung jarak hari ke wisuda
-        $interval = $today->diff($tgl_harus_wisuda);
-        $time_to_study_left = $interval->days;
+        $tglWisuda = Carbon::createFromDate(2028, 11, 30);
+        $sisaHari = Carbon::now()->diffInDays($tglWisuda);
 
-        // Semester saat ini
-        $current_semester = 2; // contoh bisa diubah sesuai kebutuhan
+        $semester = 3;
 
-        // Pesan tambahan berdasarkan semester
-        if ($current_semester < 3) {
-            $semester_message = "Masih Awal, Kejar TAK";
+
+        if ($semester < 3) {
+            $infoSemester = "Masih Awal, Kejar TAK";
         } else {
-            $semester_message = "Jangan main-main, kurang-kurangi main game!";
+            $infoSemester = "Jangan banyak main, kurangi malas-malasan";
         }
 
-        // Cita-cita
-        $future_goal = "Menjadi Software Engineer profesional";
-
-        // Kirim data ke view
         $data = [
-            'name' => $name,
-            'my_age' => $my_age,
-            'hobbies' => $hobbies,
-            'tgl_harus_wisuda' => $tgl_harus_wisuda->format('Y-m-d'),
-            'time_to_study_left' => $time_to_study_left,
-            'current_semester' => $current_semester,
-            'semester_message' => $semester_message,
-            'future_goal' => $future_goal
+            'name' => 'Alyah Najwa Restu ISlami', //
+            'my_age' => $umur,
+            'hobbies' => ['Membaca', 'Menulis', 'Mendengarkan Musik', 'Olahraga', 'Memasak'],
+            'tgl_harus_wisuda' => '30 November 2028',
+            'time_to_study_left' => $sisaHari,
+            'current_semester' => $semester,
+            'info_semester' => $infoSemester,
+            'future_goal' => 'Menjadi programmer handal dan sukses',
         ];
 
-        // tampilkan data (bisa ke view atau json)
-        $this->load->view('pegawai_view', $data);
-        // atau kalau ingin JSON:
-        // echo json_encode($data);
+        return view('halaman-mahasiswa-detail', $data);
     }
 }
