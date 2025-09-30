@@ -5,6 +5,6 @@
 </head>
 <body>
     <h1>HALO SELAMAT DATANG</h1>
-    <p>Laravel membuat development lebih 🚀</p>
+    <p>Laravel membuat development lebih cepat🚀</p>
 </body>
 </html>
