@@ -34,7 +34,7 @@ Route ::get('/matakuliah/{param1}', [MatakuliahController::class,'show']);
 Route::get('/about', function () {
     return view('halaman-about');
 });
-route::get('/home', [HomeController::class,'index']);
+route::get('/home', [HomeController::class,'index'])->name('home');
 route::get('/pegawai', [PegawaiController::class,'index']);
 
 Route::post('question/store', [QuestionController::class, 'store'])
