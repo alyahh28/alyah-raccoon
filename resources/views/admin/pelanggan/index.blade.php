@@ -130,7 +130,9 @@
                                 @endforeach
                             </tbody>
                         </table>
-                        {{ $dataPelanggan->links('pagination::simple-bootstrap-5') }}
+                         <div class="mt-3">
+        {{ $dataPelanggan->links('pagination::bootstrap-5') }}
+    </div>
                     </div>
                 </div>
             </div>
