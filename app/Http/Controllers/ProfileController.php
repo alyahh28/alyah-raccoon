@@ -44,19 +44,19 @@ class ProfileController extends Controller
         return view('admin.profile.show', compact('user'));
     }
 
-
     /**
      * Show the form for editing the specified resource.
      */
-    // Show the edit profile form
     public function edit()
     {
-        return view('admin.profile.edit');
+        $user = Auth::user();
+        return view('admin.profile.edit', compact('user'));
     }
+
     /**
      * Update the specified resource in storage.
      */
-     public function update(Request $request)
+    public function update(Request $request)
     {
         $request->validate([
             'profile_picture' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
@@ -74,7 +74,7 @@ class ProfileController extends Controller
         $user->profile_picture = $path;
         $user->save();
 
-        return redirect()->route('admin.profile.edit')->with('success', 'Profile picture updated successfully!');
+        return redirect()->route('profile.show')->with('success', 'Profile picture updated successfully!');
     }
 
     /**
@@ -90,6 +90,6 @@ class ProfileController extends Controller
             $user->save();
         }
 
-        return redirect()->route('admin.profile.edit')->with('success', 'Profile picture deleted successfully!');
+        return redirect()->route('profile.show')->with('success', 'Profile picture deleted successfully!');
     }
-}
+}   
