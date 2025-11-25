@@ -50,7 +50,9 @@ Route::resource('pelanggan', PelangganController::class);
 
 Route::resource('user', UserController::class);
 
-
+// routes/web.php
+Route::delete('/pelanggan/{id}/file/{fileName}', [PelangganController::class, 'deleteFile'])
+    ->name('pelanggan.deleteFile');
 
 
 

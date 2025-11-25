@@ -50,6 +50,8 @@ class UserController extends Controller
             $data['profile_picture'] = $path;
         }
 
+        
+
         User::create($data);
 
         return redirect()->route('user.index')->with('success', 'Penambahan Data User Berhasil!');

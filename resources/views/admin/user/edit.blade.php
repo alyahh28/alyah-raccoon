@@ -105,17 +105,31 @@
                                         @enderror
 
                                     <!-- Preview Foto Profil Saat Ini -->
-                                    @if($dataUser->profile_picture)
-                                        <div class="mt-2">
-                                            <p class="text-sm text-muted mb-1">Foto saat ini:</p>
-                                            <img src="{{ Storage::url($dataUser->profile_picture) }}"
-                                                 alt="Profile Picture"
-                                                 class="rounded"
-                                                 width="100"
-                                                 height="100"
-                                                 style="object-fit: cover;">
-                                        </div>
-                                    @endif
+                                    @if($dataUser->profile_picture && Storage::disk('public')->exists($dataUser->profile_picture))
+    <div class="mt-3">
+        <p class="text-sm text-muted mb-2">Foto saat ini:</p>
+        <div class="d-flex align-items-center gap-3 p-3 bg-light rounded">
+            <img src="{{ asset('storage/' . $dataUser->profile_picture) }}"
+                 alt="Profile Picture"
+                 class="rounded-circle shadow-sm"
+                 width="60"
+                 height="60"
+                 style="object-fit: cover; border: 3px solid #fff;">
+            <div>
+                <p class="fw-bold mb-1 text-dark">{{ $dataUser->name }}</p>
+                <p class="text-muted small mb-0">{{ $dataUser->email }}</p>
+            </div>
+        </div>
+    </div>
+@elseif($dataUser->profile_picture)
+    <div class="mt-3">
+        <p class="text-sm text-muted mb-2">Foto saat ini:</p>
+        <div class="alert alert-warning p-3">
+            <i class="fas fa-exclamation-triangle me-2"></i>
+            File gambar tidak ditemukan
+        </div>
+    </div>
+@endif
                                 </div>
                             </div>
                         </div>
