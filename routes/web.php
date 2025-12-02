@@ -64,3 +64,4 @@ Route::get('auth/logout', [AuthController::class, 'logout'])->name('auth.logout'
 route::group(['middleware' => [/*'checkislogin',*/ 'checkrole:Super Admin']], function () {
     Route::get('user', [UserController::class, 'index'])->name('user.index');
 });
+
