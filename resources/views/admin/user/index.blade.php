@@ -49,7 +49,9 @@
                                     <th class="border-0 rounded-start">FOTO PROFIL</th>
                                     <th class="border-0">NAMA</th>
                                     <th class="border-0">EMAIL</th>
+                                      <th class="border-0 rounded-end">ROLE</th>
                                     <th class="border-0 rounded-end">AKSI</th>
+
                                 </tr>
                             </thead>
                             <tbody>
@@ -71,6 +73,7 @@
                                             <div class="fw-bold">{{ $item->name }}</div>
                                         </td>
                                         <td>{{ $item->email }}</td>
+                                        <td>{{ $item->role }}</td>
                                         <td>
                                             <div class="d-flex gap-2">
                                                 <a href="{{ route('user.edit', $item->id) }}"
@@ -89,6 +92,7 @@
                                                 </form>
                                             </div>
                                         </td>
+
                                     </tr>
                                 @empty
                                     <tr>

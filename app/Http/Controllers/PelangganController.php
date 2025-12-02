@@ -3,15 +3,21 @@ namespace App\Http\Controllers;
 
 use App\Models\Pelanggan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 
 class PelangganController extends Controller
 {
      public function index(Request $request)
 {
     $query = Pelanggan::query();
+
+      if (!Auth::check()) {
+            //Redirect ke halaman login
+            return redirect()->route('auth.index');
+        }
 
     // Filter by gender
     if ($request->filled('gender')) {

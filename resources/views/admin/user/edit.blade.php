@@ -71,6 +71,17 @@
                             </div>
                         </div>
 
+                         <!-- Role -->
+                                <div class="mb-3">
+                                    <label for="role" class="form-label">role</label>
+                                    <select id="role" name="role" class="form-select">
+                                        <option value="">-- Pilih --</option>
+                                        <option value="Super Admin">Super Admin</option>
+                                        <option value="Admin">Admin</option>
+                                        <option value="Mitra">Mitra</option>
+                                    </select>
+                                </div>
+
                         <!-- Kolom Kanan -->
                         <div class="col-lg-6">
                             <div class="mb-4">

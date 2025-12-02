@@ -14,7 +14,6 @@ use App\Http\Controllers\MatakuliahController;
 
 Route::get('/', function () {
     return view('welcome');
-
 });
 
 Route::get('/pcr', function () {
@@ -26,26 +25,29 @@ Route::get('/mahasiswa', function () {
 })->name('mahasiswa.show');
 
 Route::get('/nama/{param1}', function ($param1) {
-    return 'Nama saya: '.$param1;
+    return 'Nama saya: ' . $param1;
 });
 
 Route::get('/nim/{param1?}', function ($param1 = '') {
-    return 'NIM saya: '.$param1;
+    return 'NIM saya: ' . $param1;
 });
 
-Route ::get('/mahasiswa/{param1}', [MahasiswaController::class,'show']);
-Route ::get('/matakuliah/{param1}', [MatakuliahController::class,'show']);
+Route::get('/mahasiswa/{param1}', [MahasiswaController::class, 'show']);
+Route::get('/matakuliah/{param1}', [MatakuliahController::class, 'show']);
 
 Route::get('/about', function () {
     return view('halaman-about');
 });
-route::get('/home', [HomeController::class,'index'])->name('home');
-route::get('/pegawai', [PegawaiController::class,'index']);
+route::get('/home', [HomeController::class, 'index'])->name('home');
+route::get('/pegawai', [PegawaiController::class, 'index']);
 
 Route::post('question/store', [QuestionController::class, 'store'])
-		->name('question.store');
+    ->name('question.store');
 
-route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+route::get('dashboard', [DashboardController::class, 'index'])
+    ->name('dashboard')
+    ->middleware('checkislogin');
+
 
 Route::resource('pelanggan', PelangganController::class);
 
@@ -57,3 +59,8 @@ Route::delete('/pelanggan/{id}/file/{fileName}', [PelangganController::class, 'd
 
 Route::get('auth', [AuthController::class, 'index'])->name('auth.index');
 Route::post('auth/login', [AuthController::class, 'login'])->name('auth.login');
+Route::get('auth/logout', [AuthController::class, 'logout'])->name('auth.logout');
+
+route::group(['middleware' => [/*'checkislogin',*/ 'checkrole:Super Admin']], function () {
+    Route::get('user', [UserController::class, 'index'])->name('user.index');
+});

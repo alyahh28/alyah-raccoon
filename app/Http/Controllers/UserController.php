@@ -41,6 +41,7 @@ class UserController extends Controller
         $data = [
             'name' => $request->name,
             'email' => $request->email,
+            'role' => $request->role,
             'password' => Hash::make($request->password),
         ];
 
@@ -50,7 +51,7 @@ class UserController extends Controller
             $data['profile_picture'] = $path;
         }
 
-        
+
 
         User::create($data);
 
